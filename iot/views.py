@@ -19,13 +19,15 @@ class SensorDataView(APIView):
                 'message': 'Invalid data provided',
                 'error': serializer.errors
             },status=status.HTTP_400_BAD_REQUEST)
-        timestamp = data.get('timestamp')
         moisture = data.get('moisture')
         tank_level = data.get('tank_level')
         temperature = data.get('temperature')
         valve_open_time = data.get('valve_open_time')
         valve_close_time = data.get('valve_close_time')
-        sensor_data = SensorData(timestamp, moisture, tank_level, temperature, valve_open_time, valve_close_time)
+        valve = data.get('valve')
+        print(valve)
+        valve_instance = Valve.objects.get(id=valve)
+        sensor_data = SensorData(valve=valve_instance, moisture=moisture, tank_level=tank_level, temperature = temperature, valve_open_time = valve_open_time, valve_close_time=valve_close_time)
         sensor_data.save()
         return Response({
             'status': True,
