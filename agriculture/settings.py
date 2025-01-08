@@ -82,8 +82,8 @@ WSGI_APPLICATION = 'agriculture.wsgi.application'
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.postgresql',
-        'NAME': 'smart_farm_db',
+        'ENGINE': 'django.db.backends.mysql',
+        'NAME': 'Smart_Farm_DB',
         'USER': 'postgres',
         'PASSWORD':'Muasya254;',
         'HOST': 'localhost',
