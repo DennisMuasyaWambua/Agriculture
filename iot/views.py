@@ -1,5 +1,6 @@
 from django.shortcuts import render
 from rest_framework.views import APIView
+from django.views.generic.list import ListView
 from rest_framework import status
 from .models import *
 from .serializer import SensorDataSerializer, ValveSerializer
@@ -26,13 +27,19 @@ class SensorDataView(APIView):
         valve_close_time = data.get('valve_close_time')
         valve = data.get('valve')
         print(valve)
-        valve_instance = Valve.objects.get(id=valve)
+        valve_instance = Valve.objects.filter(id=valve).first()
         sensor_data = SensorData(valve=valve_instance, moisture=moisture, tank_level=tank_level, temperature = temperature, valve_open_time = valve_open_time, valve_close_time=valve_close_time)
         sensor_data.save()
         return Response({
             'status': True,
             'message': 'sensor data saved successfully',
         },status=status.HTTP_200_OK)
+    
+class GetSensorData(APIView):
+    def get(self, request):
+        sensors_data = SensorData.objects.all()
+        serializer = SensorDataSerializer(sensors_data, many=True)
+        return Response(serializer.data,status=status.HTTP_200_OK)
     
 class ValveView(APIView):
     serializer_class = ValveSerializer
@@ -75,5 +82,16 @@ class ValveView(APIView):
                 'message': 'Data type conversion error',
                 'error': str(e)
             }, status=status.HTTP_400_BAD_REQUEST)
+    def get(self, request):
+        valve_data = Valve.objects.all()
+        serializer = ValveSerializer(valve_data, many=True)
+        return Response({
+            serializer.data
+        })
+class GetValveVeiw(APIView):
+    def get(self, request):
+        valve_data = Valve.objects.all()
+        serializer = ValveSerializer(valve_data, many=True)
+        return Response(serializer.data, status=status.HTTP_200_OK)
 
         
