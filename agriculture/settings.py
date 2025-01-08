@@ -86,8 +86,8 @@ DATABASES = {
         'NAME': 'Smart_Farm_DB',
         'USER': 'postgres',
         'PASSWORD':'Muasya254;',
-        'HOST': 'localhost',
-        'PORT': '5432',
+        'HOST': '139.84.232.211',
+        'PORT': '3306',
     }
 }
 
