@@ -12,6 +12,7 @@ https://docs.djangoproject.com/en/4.2/ref/settings/
 
 from pathlib import Path
 from decouple import config
+import os
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -78,16 +79,18 @@ WSGI_APPLICATION = 'agriculture.wsgi.application'
 
 
 # Database
-# https://docs.djangoproject.com/en/4.2/ref/settings/#databases
+# https://docs.djangoproject.com/en/4.2/ref/settings/#database
+# 
+#print(os.getenv("NAME"),  os.getenv("USER"),os.getenv("PASSWORD"),os.getenv("HOST"), os.getenv("PORT"))
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.mysql',
-        'NAME': 'Smart_Farm_DB',
-        'USER': 'postgres',
-        'PASSWORD':'Muasya254;',
-        'HOST': '139.84.232.211',
-        'PORT': '3306',
+        "ENGINE": "django.db.backends.postgresql",
+        "NAME": f"{os.getenv('NAME')}",
+        "USER": f"{os.getenv('USER')}",
+        "PASSWORD":f"{os.getenv('PASSWORD')}",
+        "HOST": f"{os.getenv('HOST')}",
+        "PORT": f"{os.getenv('PORT')}",
     }
 }
 
