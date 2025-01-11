@@ -84,13 +84,13 @@ WSGI_APPLICATION = 'agriculture.wsgi.application'
 #print(os.getenv("NAME"),  os.getenv("USER"),os.getenv("PASSWORD"),os.getenv("HOST"), os.getenv("PORT"))
 
 DATABASES = {
-    'default': {
+    "default": {
         "ENGINE": "django.db.backends.postgresql",
-        "NAME": f"{os.getenv('NAME')}",
-        "USER": f"{os.getenv('USER')}",
-        "PASSWORD":f"{os.getenv('PASSWORD')}",
-        "HOST": f"{os.getenv('HOST')}",
-        "PORT": f"{os.getenv('PORT')}",
+        "NAME": config("NAME"),
+        "USER": config("USER"),
+        "PASSWORD":config("PASSWORD"),
+        "HOST": config("HOST"),
+        "PORT": config("PORT"),
     }
 }
 
