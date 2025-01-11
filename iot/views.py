@@ -82,12 +82,12 @@ class ValveView(APIView):
                 'message': 'Data type conversion error',
                 'error': str(e)
             }, status=status.HTTP_400_BAD_REQUEST)
-    def get(self, request):
-        valve_data = Valve.objects.all()
-        serializer = ValveSerializer(valve_data, many=True)
-        return Response({
-            serializer.data
-        })
+    # def get(self, request):
+    #     valve_data = Valve.objects.all()
+    #     serializer = ValveSerializer(valve_data, many=True)
+    #     return Response({
+    #         serializer.data
+    #     })
 class GetValveVeiw(APIView):
     def get(self, request):
         valve_data = Valve.objects.all()
