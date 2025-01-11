@@ -12,7 +12,8 @@ https://docs.djangoproject.com/en/4.2/ref/settings/
 
 from pathlib import Path
 from decouple import config
-import os
+import dj_database_url
+
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -83,16 +84,25 @@ WSGI_APPLICATION = 'agriculture.wsgi.application'
 # 
 #print(os.getenv("NAME"),  os.getenv("USER"),os.getenv("PASSWORD"),os.getenv("HOST"), os.getenv("PORT"))
 
-DATABASES = {
-    "default": {
-        "ENGINE": "django.db.backends.postgresql",
-        "NAME": config("NAME"),
-        "USER": config("USER"),
-        "PASSWORD":config("PASSWORD"),
-        "HOST": config("HOST"),
-        "PORT": config("PORT"),
+ENVIRONMENT = config("ENVIRONMENT")
+
+if ENVIRONMENT != "prod":
+    DATABASES = {
+        "default": {
+            "ENGINE": "django.db.backends.postgresql",
+            "NAME": config("NAME"),
+            "USER": config("USER"),
+            "PASSWORD":config("PASSWORD"),
+            "HOST": config("HOST"),
+            "PORT": config("PORT"),
+        }
     }
-}
+else:
+    DATABASE_URL = config("DATABASE_URL")
+    DATABASES = {
+    'default': dj_database_url.config(default=DATABASE_URL, conn_max_age = 1800),
+    }
+
 
 
 # Password validation
