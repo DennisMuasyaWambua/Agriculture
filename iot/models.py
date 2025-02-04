@@ -4,7 +4,7 @@ from django.db import models
 
 class SensorData(models.Model):
     valve = models.ForeignKey("valve",on_delete=models.CASCADE, limit_choices_to={"valve_no__in": [1, 2]},)
-    timestamp = models.DateTimeField(auto_now_add=True),
+    timestamp = models.DateTimeField(auto_now=True),
     moisture = models.IntegerField()
     tank_level = models.DecimalField(max_digits=8, decimal_places=2)
     temperature = models.DecimalField(max_digits=8,decimal_places=2)
@@ -26,7 +26,7 @@ class Valve(models.Model):
     soil_temperature = models.DecimalField(max_digits=8, decimal_places=2)
     closing_time =models.DateTimeField(auto_now_add=True)
     is_open = models.BooleanField(default=False)
-    timestamp = models.DateTimeField(auto_now_add=True),
+    timestamp = models.DateTimeField(auto_now=True),
 
 
 
