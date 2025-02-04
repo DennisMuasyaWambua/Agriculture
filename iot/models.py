@@ -26,6 +26,7 @@ class Valve(models.Model):
     soil_temperature = models.DecimalField(max_digits=8, decimal_places=2)
     closing_time =models.DateTimeField(auto_now_add=True)
     is_open = models.BooleanField(default=False)
+    timestamp = models.DateTimeField(auto_now_add=True),
 
 
 
