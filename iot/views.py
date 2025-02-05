@@ -3,7 +3,7 @@ from rest_framework.views import APIView
 from django.views.generic.list import ListView
 from rest_framework import status
 from .models import *
-from .serializer import SensorDataSerializer, ValveSerializer
+from .serializer import SensorDataSerializer, ValveSerializer, ValveControlSerializer
 from rest_framework.response import Response
 
 
@@ -94,4 +94,17 @@ class GetValveVeiw(APIView):
         serializer = ValveSerializer(valve_data, many=True)
         return Response(serializer.data, status=status.HTTP_200_OK)
 
-        
+class ValveControlView(APIView):
+      serializer_class = ValveControlSerializer
+      def post(self, request):
+          data  = request.data
+          serializer = self.serializer_class(data=data)
+          if not serializer.is_valid():
+              return Response({
+                  'status': False,
+                  'message': 'Invalid data provided',
+                  'error': serializer.errors
+              },status=status.HTTP_400_BAD_REQUEST)
+          return Response({"status":True,
+                           "message":"Valve control data saved successfully"
+                           },status=status.HTTP_200_OK)

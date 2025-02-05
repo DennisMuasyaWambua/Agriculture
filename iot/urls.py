@@ -6,4 +6,5 @@ urlpatterns = [
     path("valve/", ValveView.as_view(), name="valve"),
     path("getsensordata/", GetSensorData.as_view(), name="getsensordata"),
     path("getvalvedata/",GetValveVeiw.as_view(), name="getvalvedata"),
-]
+    path("valveControl/", ValveControlView.as_view(), name="valve")
+]   

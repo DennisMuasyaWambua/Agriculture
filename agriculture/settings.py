@@ -86,22 +86,22 @@ WSGI_APPLICATION = 'agriculture.wsgi.application'
 
 ENVIRONMENT = config("ENVIRONMENT")
 
-if ENVIRONMENT != "prod":
-    DATABASES = {
-        "default": {
-            "ENGINE": "django.db.backends.postgresql",
-            "NAME": config("NAME"),
-            "USER": config("USER"),
-            "PASSWORD":config("PASSWORD"),
-            "HOST": config("HOST"),
-            "PORT": config("PORT"),
-        }
-    }
-else:
-    DATABASE_URL = config("DATABASE_URL")
-    DATABASES = {
-    'default': dj_database_url.config(default=DATABASE_URL, conn_max_age = 1800),
-    }
+# if ENVIRONMENT != "prod":
+#     DATABASES = {
+#         "default": {
+#             "ENGINE": "django.db.backends.postgresql",
+#             "NAME": config("NAME"),
+#             "USER": config("USER"),
+#             "PASSWORD":config("PASSWORD"),
+#             "HOST": config("HOST"),
+#             "PORT": config("PORT"),
+#         }
+#     }
+# else:
+DATABASE_URL = config("DATABASE_URL")
+DATABASES = {
+'default': dj_database_url.config(default=DATABASE_URL, conn_max_age = 1800),
+}
 
 
 

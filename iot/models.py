@@ -28,5 +28,22 @@ class Valve(models.Model):
     is_open = models.BooleanField(default=False)
     timestamp = models.DateTimeField(auto_now=True),
 
+    def __str__(self):
+        return self.valve_no
+    
+
+class ValveControl(models.Model):
+     timestamp = models.DateTimeField(auto_now=True)
+     valve_no = models.IntegerField(blank=False,choices=[
+            (1, 'Valve 1'),
+            (2, 'Valve 2')
+        ],default=1,
+        error_messages={
+            'invalid_choice': 'Valve number must be either 1 or 2'
+        })
+     is_open = models.BooleanField(default=False)
+     
+     
+
 
 

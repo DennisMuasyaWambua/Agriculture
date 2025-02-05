@@ -17,3 +17,7 @@ class ValveSerializer(serializers.ModelSerializer):
             raise serializers.ValidationError("Valve number must be either 1 or 2")
         return value
       
+class ValveControlSerializer(serializers.ModelSerializer):
+     class Meta:
+          model = ValveControl
+          fields = '__all__'
