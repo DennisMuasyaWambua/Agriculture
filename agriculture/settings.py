@@ -30,7 +30,7 @@ DEBUG = True
 
 CORS_ALLOW_ALL_ORIGINS:True
 
-ALLOWED_HOSTS = ['agriculture-production.up.railway.app','api.contemporary.co.ke']
+ALLOWED_HOSTS = ['agriculture-production.up.railway.app','api.contemporary.co.ke','127.0.0.1']
 
 
 # Application definition

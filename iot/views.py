@@ -105,6 +105,7 @@ class ValveControlView(APIView):
                   'message': 'Invalid data provided',
                   'error': serializer.errors
               },status=status.HTTP_400_BAD_REQUEST)
+          serializer.save()
           return Response({"status":True,
                            "message":"Valve control data saved successfully"
                            },status=status.HTTP_200_OK)
