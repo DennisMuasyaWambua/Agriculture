@@ -109,3 +109,16 @@ class ValveControlView(APIView):
           return Response({"status":True,
                            "message":"Valve control data saved successfully"
                            },status=status.HTTP_200_OK)
+      def get(self, request):
+          data = request.data
+          serializer = self.serializer_class(data=data)
+          if not serializer.is_valid():
+              return Response({
+                  'status': False,
+                  'message': 'Invalid data provided',
+                  'error': serializer.errors
+              },status=status.HTTP_400_BAD_REQUEST)
+          serializer.save()
+          return Response({"status":True,
+                           "message":"Valve control retrieved successfully"
+                           },status=status.HTTP_200_OK)

@@ -84,25 +84,29 @@ WSGI_APPLICATION = 'agriculture.wsgi.application'
 # 
 #print(os.getenv("NAME"),  os.getenv("USER"),os.getenv("PASSWORD"),os.getenv("HOST"), os.getenv("PORT"))
 
-ENVIRONMENT = config("ENVIRONMENT")
+ENVIRONMENT = config("ENVIRONMENT", default="dev")
 
-# if ENVIRONMENT != "prod":
-#     DATABASES = {
-#         "default": {
-#             "ENGINE": "django.db.backends.postgresql",
-#             "NAME": config("NAME"),
-#             "USER": config("USER"),
-#             "PASSWORD":config("PASSWORD"),
-#             "HOST": config("HOST"),
-#             "PORT": config("PORT"),
-#         }
-#     }
-# else:
-DATABASE_URL = config("DATABASE_URL")
-DATABASES = {
-'default': dj_database_url.config(default=DATABASE_URL, conn_max_age = 1800),
-}
-
+if ENVIRONMENT == "dev":
+    DATABASES = {
+        "default": {
+            "ENGINE": "django.db.backends.postgresql",
+            "NAME": config("NAME"),
+            "USER": config("USER"),
+            "PASSWORD":config("PASSWORD"),
+            "HOST": config("HOST"),
+            "PORT": config("PORT"),
+        }
+    }
+else:
+    db_from_env = dj_database_url.parse(
+        config("DATABASE_URL"),
+        conn_max_age=600,
+        conn_health_checks=True,
+        ssl_require=False
+    )
+    DATABASES = {
+        'default': db_from_env
+    }
 
 
 # Password validation
