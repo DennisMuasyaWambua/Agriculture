@@ -98,6 +98,17 @@ if ENVIRONMENT == "dev":
         }
     }
 else:
+    # DATABASES = {
+    #     "default": {
+    #         "ENGINE": "django.db.backends.postgresql",
+    #         "NAME": "railway",
+    #         "USER": "railway",
+    #         "PASSWORD":"DPMibYPLiSWvJruhKdRIvOKESzGfDEpj",
+    #         "HOST": "postgres-zjrw.railway.internal",
+    #         "PORT": "5432",
+    #     }
+    # }
+
     db_from_env = dj_database_url.parse(
         config("DATABASE_URL"),
         conn_max_age=600,
