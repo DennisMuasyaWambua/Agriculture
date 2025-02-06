@@ -11,7 +11,7 @@ class SensorDataSerializer(serializers.ModelSerializer):
 class ValveSerializer(serializers.ModelSerializer):
       class Meta:
             model = Valve
-            fields ='__all__'
+            fields =['id', 'timestamp']
       def validate_valve_no(self, value):
         if value not in [1, 2]:
             raise serializers.ValidationError("Valve number must be either 1 or 2")

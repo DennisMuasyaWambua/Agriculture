@@ -84,40 +84,19 @@ WSGI_APPLICATION = 'agriculture.wsgi.application'
 # 
 #print(os.getenv("NAME"),  os.getenv("USER"),os.getenv("PASSWORD"),os.getenv("HOST"), os.getenv("PORT"))
 
-ENVIRONMENT = config("ENVIRONMENT", default="dev")
 
-if ENVIRONMENT == "dev":
-    DATABASES = {
-        "default": {
-            "ENGINE": "django.db.backends.postgresql",
-            "NAME": config("NAME"),
-            "USER": config("USER"),
-            "PASSWORD":config("PASSWORD"),
-            "HOST": config("HOST"),
-            "PORT": config("PORT"),
-        }
-    }
-else:
-    # DATABASES = {
-    #     "default": {
-    #         "ENGINE": "django.db.backends.postgresql",
-    #         "NAME": "railway",
-    #         "USER": "railway",
-    #         "PASSWORD":"DPMibYPLiSWvJruhKdRIvOKESzGfDEpj",
-    #         "HOST": "postgres-zjrw.railway.internal",
-    #         "PORT": "5432",
-    #     }
-    # }
 
-    db_from_env = dj_database_url.parse(
-        config("DATABASE_URL"),
-        conn_max_age=600,
-        conn_health_checks=True,
-        ssl_require=False
-    )
-    DATABASES = {
-        'default': db_from_env
-    }
+
+db_from_env = dj_database_url.parse(
+    config("DATABASE_URL"),
+    conn_max_age=600,
+    conn_health_checks=True,
+    ssl_require=False
+)
+DATABASES = {
+    'default': db_from_env
+}
+print(config("DATABASE_URL"))
 
 
 # Password validation
