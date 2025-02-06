@@ -25,10 +25,11 @@ class SensorDataView(APIView):
         temperature = data.get('temperature')
         valve_open_time = data.get('valve_open_time')
         valve_close_time = data.get('valve_close_time')
+        timestamp = data.get('timestamp')
         valve = data.get('valve')
         print(valve)
         valve_instance = Valve.objects.filter(id=valve).first()
-        sensor_data = SensorData(valve=valve_instance, moisture=moisture, tank_level=tank_level, temperature = temperature, valve_open_time = valve_open_time, valve_close_time=valve_close_time)
+        sensor_data = SensorData(valve=valve_instance, timestamp=timestamp, moisture=moisture, tank_level=tank_level, temperature = temperature, valve_open_time = valve_open_time, valve_close_time=valve_close_time)
         sensor_data.save()
         return Response({
             'status': True,
@@ -53,7 +54,8 @@ class ValveView(APIView):
                 'flow_rate': float(request.data.get('flow_rate')),
                 'soil_moisture': int(request.data.get('soil_moisture')),
                 'soil_temperature': float(request.data.get('soil_temperature')),
-                'is_open': bool(request.data.get('is_open'))
+                'is_open': bool(request.data.get('is_open')),
+                
             }
             
             # Handle opening_time and closing_time only if they're provided
@@ -61,6 +63,8 @@ class ValveView(APIView):
                 data['opening_time'] = str(request.data.get('opening_time'))
             if request.data.get('closing_time'):
                 data['closing_time'] = str(request.data.get('closing_time'))
+            if request.data.get('timestamp'):
+                data['timestamp'] = str(request.data.get('timestamp'))
             
             serializer = self.serializer_class(data=data)
             if not serializer.is_valid():
