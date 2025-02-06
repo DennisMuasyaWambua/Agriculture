@@ -55,7 +55,7 @@ class ValveView(APIView):
                 'soil_moisture': int(request.data.get('soil_moisture')),
                 'soil_temperature': float(request.data.get('soil_temperature')),
                 'is_open': bool(request.data.get('is_open')),
-                
+                'timestamp':str(request.data.get('timestamp'))
             }
             
             # Handle opening_time and closing_time only if they're provided
