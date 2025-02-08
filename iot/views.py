@@ -31,21 +31,36 @@ class SensorDataView(APIView):
         valve_instance = Valve.objects.filter(id=valve).first()
         sensor_data = SensorData(valve=valve_instance, timestamp=timestamp, moisture=moisture, tank_level=tank_level, temperature = temperature, valve_open_time = valve_open_time, valve_close_time=valve_close_time)
         sensor_data.save()
+        headers = {
+          "Access-Control-Allow-Origin": "https://dashboard.contemporary.co.ke",
+          "Access-Control-Allow-Methods": "GET, POST, OPTIONS",
+          "Access-Control-Allow-Headers": "Content-Type"
+        }
         return Response({
             'status': True,
             'message': 'sensor data saved successfully',
-        },status=status.HTTP_200_OK)
+        },status=status.HTTP_200_OK, headers=headers)
     
 class GetSensorData(APIView):
     def get(self, request):
         sensors_data = SensorData.objects.all()
         serializer = SensorDataSerializer(sensors_data, many=True)
-        return Response(serializer.data,status=status.HTTP_200_OK)
+        headers = {
+          "Access-Control-Allow-Origin": "https://dashboard.contemporary.co.ke",
+          "Access-Control-Allow-Methods": "GET, POST, OPTIONS",
+          "Access-Control-Allow-Headers": "Content-Type"
+        }
+        return Response(serializer.data,status=status.HTTP_200_OK, headers=headers)
     
 class ValveView(APIView):
     serializer_class = ValveSerializer
     
     def post(self, request):
+        headers = {
+          "Access-Control-Allow-Origin": "https://dashboard.contemporary.co.ke",
+          "Access-Control-Allow-Methods": "GET, POST, OPTIONS",
+          "Access-Control-Allow-Headers": "Content-Type"
+        }
         try:
             # Convert request data to proper format
             data = {
@@ -72,20 +87,20 @@ class ValveView(APIView):
                     'status': False,
                     'message': 'Invalid data provided',
                     'error': serializer.errors
-                }, status=status.HTTP_400_BAD_REQUEST)
+                }, status=status.HTTP_400_BAD_REQUEST, headers=headers)
                 
             serializer.save()
             return Response({
                 'status': True,
                 'message': 'Valve data saved successfully'
-            }, status=status.HTTP_200_OK)
+            }, status=status.HTTP_200_OK, headers=headers)
             
         except (ValueError, TypeError) as e:
             return Response({
                 'status': False,
                 'message': 'Data type conversion error',
                 'error': str(e)
-            }, status=status.HTTP_400_BAD_REQUEST)
+            }, status=status.HTTP_400_BAD_REQUEST, headers=headers)
     # def get(self, request):
     #     valve_data = Valve.objects.all()
     #     serializer = ValveSerializer(valve_data, many=True)
@@ -93,14 +108,25 @@ class ValveView(APIView):
     #         serializer.data
     #     })
 class GetValveVeiw(APIView):
+    
     def get(self, request):
+        headers = {
+          "Access-Control-Allow-Origin": "https://dashboard.contemporary.co.ke",
+          "Access-Control-Allow-Methods": "GET, POST, OPTIONS",
+          "Access-Control-Allow-Headers": "Content-Type"
+        }
         valve_data = Valve.objects.all()
         serializer = ValveSerializer(valve_data, many=True)
-        return Response(serializer.data, status=status.HTTP_200_OK)
+        return Response(serializer.data, status=status.HTTP_200_OK, headers=headers)
 
 class ValveControlView(APIView):
       serializer_class = ValveControlSerializer
       def post(self, request):
+          headers = {
+          "Access-Control-Allow-Origin": "https://dashboard.contemporary.co.ke",
+          "Access-Control-Allow-Methods": "GET, POST, OPTIONS",
+          "Access-Control-Allow-Headers": "Content-Type"
+          }
           data  = request.data
           serializer = self.serializer_class(data=data)
           if not serializer.is_valid():
@@ -112,12 +138,17 @@ class ValveControlView(APIView):
           serializer.save()
           return Response({"status":True,
                            "message":"Valve control data saved successfully"
-                           },status=status.HTTP_200_OK)
+                           },status=status.HTTP_200_OK, headers=headers)
       def get(self, request):
+          headers = {
+          "Access-Control-Allow-Origin": "https://dashboard.contemporary.co.ke",
+          "Access-Control-Allow-Methods": "GET, POST, OPTIONS",
+          "Access-Control-Allow-Headers": "Content-Type"
+          }
           data = ValveControl.objects.all()
           serializer = ValveControlSerializer(data, many=True)
           
          
           return Response({"status":True,
                            "message":serializer.data
-                           },status=status.HTTP_200_OK)
+                           },status=status.HTTP_200_OK, headers=headers)
